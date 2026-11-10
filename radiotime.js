@@ -1172,18 +1172,18 @@ var RadioTime = {
 	getReportProblemUrl: function(guide_id) {
 		return "Report.ashx?c=wizard&id=" + guide_id;
 	},
-	__formatReq: function(url, needAuth, data) {
+	_formatReq: function(url, needAuth, data) {
     // Prepare the URL
     data = data || "";
     
-    // 1. Evita formatar duas vezes se j· for um objeto de requisiÁ„o
+    // 1. Evita formatar duas vezes se j√° for um objeto de requisi√ß√£o
     if (url && url.url) {
         return url;
     }
     
-    // 2. Se j· for uma string contendo uma URL completa com http ou https, pula a concatenaÁ„o do baseUrl
+    // 2. Se j√° for uma string contendo uma URL completa com http ou https, pula a concatena√ß√£o do baseUrl
     if (typeof url === "string" && /^https?:\/\//i.test(url)) {
-        // Apenas garante que use HTTPS se comeÁar com HTTP
+        // Apenas garante que use HTTPS se come√ßar com HTTP
         url = url.replace(/^http:\/\//i, "https://");
     } else if (typeof url === "string") {
         // default request path: limpa o baseUrl e monta a URL
@@ -1227,7 +1227,7 @@ var RadioTime = {
         url += "render=json&";
     }
 
-    // 3. Limpeza cir˙rgica final contra qualquer duplicaÁ„o bizarra de protocolo
+    // 3. Limpeza cir√∫rgica final contra qualquer duplica√ß√£o bizarra de protocolo
     url = url.replace(/https?:\/\/+https?:\/\//i, "https://");
     url = url.replace(/https?:\/\/+http:\/\//i, "https://");
     url = url.replace(/https:\/\/(www\.)?http:\/\//i, "https://");
