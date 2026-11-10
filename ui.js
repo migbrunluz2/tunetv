@@ -933,7 +933,7 @@ if (!globalThis.__WB_pmw) {
                     RadioTime.$("mini-player-title").innerHTML = title;
 
                     if (this.elementPlaying.image) {
-                        RadioTime.$("mini-player-display-image").src = this.elementPlaying.image.replace(/(q|s)?\.png/, "s.png");
+                        RadioTime.$("mini-player-display-image").src = this.elementPlaying.image.replace(/(q|s)?\.png/, "q.png");
 
                     }
                 }
@@ -2309,7 +2309,7 @@ if (!globalThis.__WB_pmw) {
                             case data[i].type == "audio":
                             case data[i].oType == "program":
                                 if (data[i].image) {
-                                    data[i].sImage = data[i].image.replace(/q?\.png/, "s.png");
+                                    data[i].sImage = data[i].image.replace(/q?\.png/, "q.png");
                                 }
                                 if (RadioTime.UI.fullPageScroll) {
                                     out += RadioTime.UI.subs('<li><a class="button %(image?withimage:alongimage)%" href="#" onclick="return RadioTime.UI.currentView.info(%(index)%);" title="%(index)%">' + (data[i].image ? '<img src="%(sImage)%" alt="" width="70" height="50"/>' : '') + '%(text)%%(subtext?<span class="description">%(subtext)%</span>:)% %(is_local?<div class="local-label">local</div>:)%</a></li>', data[i]);
@@ -2988,7 +2988,7 @@ if (!globalThis.__WB_pmw) {
                     var out = [];
                     for (var i = 0; i < dataf.length; i++) {
                         dataf[i].index = i;
-                        dataf[i].simage = dataf[i].image.replace(/(s|q)?\.png/, "s.png");
+                        dataf[i].simage = dataf[i].image.replace(/(s|q)?\.png/, "q.png");
                         out.push(RadioTime.UI.subs('<li>\
 					<a class="button withimage" href="#" onclick="return RadioTime.UI.currentView.info(%(index)%);" id="outlines_%(index)%" title="%(index)%"><img src="%(simage)%" alt="logo" width="70" height="50"/>%(text)%%(subtext? <span class="description">&mdash; %(subtext)%</span>:)%</a>\
 					</li>', dataf[i]));
