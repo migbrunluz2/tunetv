@@ -1955,7 +1955,7 @@ if (!globalThis.__WB_pmw) {
                     if (text.length < 3) {
                         if (text.length) {
                             RadioTime.$("main").innerHTML = '<div class="message">' + RadioTime.L("search_hint") + '</div>';
-                            RadioTime.$("listing-image").src = "http://radiotime-logos.s3.amazonaws.com/s0q.png";
+                            RadioTime.$("listing-image").src = "s0q.png";
                             RadioTime.UI.$hide("listing-image");
                             RadioTime.$("pagination-side").innerHTML = "";
                         }
@@ -1975,7 +1975,7 @@ if (!globalThis.__WB_pmw) {
                     this.outline.currentOutline = 0;
                     RadioTime.$("search_field").value = '';
                     RadioTime.$("main").innerHTML = '<div class="message">' + RadioTime.L("search_instructions") + '</div>';
-                    RadioTime.$("listing-image").src = "http://radiotime-logos.s3.amazonaws.com/s0q.png";
+                    RadioTime.$("listing-image").src = "s0q.png";
                     RadioTime.UI.$hide("listing-image");
                     RadioTime.$("pagination-side").innerHTML = "";
                     RadioTime.$("search_field").focus();
@@ -2136,7 +2136,7 @@ if (!globalThis.__WB_pmw) {
                                 RadioTime.UI.$show("listing-image");
                             } else {
                                 RadioTime.UI.$hide("listing-image");
-                                RadioTime.$("listing-image").src = "http://radiotime-logos.s3.amazonaws.com/s0q.png";
+                                RadioTime.$("listing-image").src = "s0q.png";
                             }
                         }
                     });
@@ -2144,7 +2144,7 @@ if (!globalThis.__WB_pmw) {
                         if (!elem.title) {
                             return;
                         }
-                        RadioTime.$("listing-image").src = "http://radiotime-logos.s3.amazonaws.com/s0q.png";
+                        RadioTime.$("listing-image").src = "s0q.png";
                         RadioTime.UI.$hide("listing-image");
                     });
                     this.addEventHandler("pageChanged", function(page) {
@@ -2463,7 +2463,7 @@ if (!globalThis.__WB_pmw) {
                     RadioTime.$("meta-title").innerHTML = this.outline.text || '';
                     RadioTime.$("meta-text").innerHTML = this.outline.subtext || '';
                     RadioTime.$("meta-subtext").innerHTML = '';
-                    RadioTime.$("meta-image").src = this.outline.image || 'http://radiotime-logos.s3.amazonaws.com/s0q.png';
+                    RadioTime.$("meta-image").src = this.outline.image || 's0q.png';
 
                     var actions = '';
                     actions += '<li><a id="cmd_play" class="button current play" href="#"><span>Play</span></a></li>';
@@ -2904,7 +2904,7 @@ if (!globalThis.__WB_pmw) {
                         _this.renderTabs(_this.outline);
                     });
                     /*
-                    var req = "http://search.chirppp.ing/search.json?q=" + twitter_ids.join("+OR+");
+                    var req = "https://search.chirppp.ing/search.json?q=" + twitter_ids.join("+OR+");
                     // TODO -- use last_tweet_id to avoid getting the same data twice
                     RadioTime.loader.sendRequest(req, function(data){
                     data = JSON.parse(data.text);
@@ -3312,7 +3312,7 @@ if (!globalThis.__WB_pmw) {
         API: {
             lastfm: {
                 apiKey: "947c1d26e35af6fc9119a7092065e58e",
-                baseUrl: "http://ws.audioscrobbler.com/2.0/",
+                baseUrl: "https://ws.audioscrobbler.com/2.0/",
                 _cache: {},
                 getAlbumArt: function(success, failure, artist, track) {
                     var url = this.baseUrl;
@@ -3353,7 +3353,7 @@ if (!globalThis.__WB_pmw) {
             },
             twitter: {
                 maxChars: 140,
-                baseUrl: "http://search.chirppp.ing/search.json",
+                baseUrl: "https://search.chirppp.ing/search.json",
                 search: function(what, success, failure) {
                     var url = this.baseUrl + "?q=" + what + "&";
 

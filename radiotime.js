@@ -1167,7 +1167,7 @@ var RadioTime = {
 	getLogoUrl: function(guide_id, logoSize, logoFormat) {
 		var logoSizeCode = RadioTime.logoSizes[logoSize] || "";
 		var logoFormat = RadioTime.logoFormats[logoFormat] || "png";
-		return "http://cdn-radiotime-logos.tunein.com/" + guide_id + logoSizeCode + "." + logoFormat;
+		return "https://cdn-radiotime-logos.tunein.com/" + guide_id + logoSizeCode + "." + logoFormat;
 	},
 	getReportProblemUrl: function(guide_id) {
 		return "Report.ashx?c=wizard&id=" + guide_id;
@@ -1180,7 +1180,7 @@ var RadioTime = {
 			return url;
 		}
 		if (url.indexOf("http") < 0) { // default request path
-			url = (needAuth ? "https://" : "http://") + RadioTime._baseUrl + url;
+			url = (needAuth ? "https://" : "https://") + RadioTime._baseUrl + url;
 		}
 		url += (url.indexOf("?")!=-1 ? "&" : "?");
 
