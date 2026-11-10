@@ -854,7 +854,8 @@ if (!globalThis.__WB_pmw) {
                         "textEx": "",
                         "type": (oType == "program") ? "link" : "audio",
                         "image": RadioTime.getLogoUrl(logo_id, "square"),
-                        "URL": RadioTime.getTuneUrl(guide_id),
+                        "URL": RadioTime.getTuneUrl(guide_id).replace("http://", "https://"),
+
                         "oType": oType
                     }
                     return this._outline;
@@ -1172,7 +1173,8 @@ if (!globalThis.__WB_pmw) {
                     "guide_id": id,
                     "oType": RadioTime._getIdType(id),
                     "image": RadioTime.getLogoUrl(id, "square"),
-                    "URL": RadioTime.getTuneUrl(id)
+                    "URL": RadioTime.getTuneUrl(id).replace("http://", "https://")
+
                 });
                 return false;
             },
