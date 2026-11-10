@@ -1172,18 +1172,22 @@ var RadioTime = {
 	getReportProblemUrl: function(guide_id) {
 		return "Report.ashx?c=wizard&id=" + guide_id;
 	},
-	_formatReq: function(url, needAuth, data) {
+	__formatReq: function(url, needAuth, data) {
     // Prepare the URL
     data = data || "";
-    // Avoid formatting it twice
-    if (url.url) {
+    
+    // 1. Evita formatar duas vezes se já for um objeto de requisição
+    if (url && url.url) {
         return url;
     }
     
-    if (url.indexOf("https") < 0) { // default request path
-        // Garante a remoção de http:// ou https:// independente de letras maiúsculas/minúsculas
+    // 2. Se já for uma string contendo uma URL completa com http ou https, pula a concatenação do baseUrl
+    if (typeof url === "string" && /^https?:\/\//i.test(url)) {
+        // Apenas garante que use HTTPS se começar com HTTP
+        url = url.replace(/^http:\/\//i, "https://");
+    } else if (typeof url === "string") {
+        // default request path: limpa o baseUrl e monta a URL
         var cleanBaseUrl = RadioTime._baseUrl.replace(/^(https?:\/\/)?/i, "");
-        // Garante que o cleanBaseUrl termine com uma barra se não houver uma no começo de url
         if (cleanBaseUrl.slice(-1) !== "/" && url.charAt(0) !== "/") {
             cleanBaseUrl += "/";
         }
@@ -1223,16 +1227,13 @@ var RadioTime = {
         url += "render=json&";
     }
 
-    // CORREÇÃO BRUTA: Remove qualquer duplicação ou mistura de protocolos na URL final
-    url = url.replace(/https?:\/\/https?:\/\//i, "https://");
-    url = url.replace(/https?:\/\/http:\/\//i, "https://");
-    if (url.indexOf("http://") === 0) {
-        url = url.replace("http://", "https://");
-    }
+    // 3. Limpeza cirúrgica final contra qualquer duplicação bizarra de protocolo
+    url = url.replace(/https?:\/\/+https?:\/\//i, "https://");
+    url = url.replace(/https?:\/\/+http:\/\//i, "https://");
+    url = url.replace(/https:\/\/(www\.)?http:\/\//i, "https://");
 
     return {"url": url, "data": data};
 },
-
 	
 	loadJSON: function(url, onsuccess, onfailure, cacheTTL) {
 		var originalUrl = url;
