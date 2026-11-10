@@ -1179,7 +1179,7 @@ var RadioTime = {
 		if (url.url) {
 			return url;
 		}
-		if (url.indexOf("http") < 0) { // default request path
+		if (url.indexOf("https") < 0) { // default request path
 			url = (needAuth ? "https://" : "https://") + RadioTime._baseUrl + url;
 		}
 		url += (url.indexOf("?")!=-1 ? "&" : "?");
