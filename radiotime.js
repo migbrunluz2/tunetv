@@ -1173,49 +1173,60 @@ var RadioTime = {
 		return "Report.ashx?c=wizard&id=" + guide_id;
 	},
 	_formatReq: function(url, needAuth, data) {
-		// Prepare the URL
-		data = data || "";
-		// Avoid formatting it twice
-		if (url.url) {
-			return url;
-		}
-		if (url.indexOf("https") < 0) { // default request path
-			url = (needAuth ? "https://" : "https://") + RadioTime._baseUrl + url;
-		}
-		url += (url.indexOf("?")!=-1 ? "&" : "?");
+    // Prepare the URL
+    data = data || "";
+    // Avoid formatting it twice
+    if (url.url) {
+        return url;
+    }
+    
+    if (url.indexOf("https") < 0) { // default request path
+        // Clean up _baseUrl in case it already contains "http://" or "https://"
+        var cleanBaseUrl = RadioTime._baseUrl.replace(/^https?:\/\//i, "");
+        url = "https://" + cleanBaseUrl + url;
+    }
+    
+    url += (url.indexOf("?")!=-1 ? "&" : "?");
 
-		if (url.indexOf("username") < 0 && this._username !== undefined) {
-			url += "username=" + this._username + "&";
-		}
-		if (needAuth && url.indexOf("password") < 0 && this._password !== undefined) {
-			url += "password=" + this._password + "&";
-		}
-		if (url.indexOf("partnerId") < 0 && data.indexOf("partnerId") < 0) {
-			url += "partnerId=" + RadioTime._partnerId + "&";
-		}
-		if (url.indexOf("username") < 0 && url.indexOf("serial") < 0 && data.indexOf("serial") < 0) {
-			url += "serial=" + RadioTime._serial + "&";
-		}
-		if (!needAuth && RadioTime.formats && url.indexOf("formats") < 0 && data.indexOf("formats") < 0) {
-			url += "formats=" + RadioTime.formats.join(",") + "&";
-		}
-		if (!needAuth && !RadioTime.includePlaylists && url.indexOf("playlists") < 0 && data.indexOf("playlists") < 0) {
-			url += "playlists=none&";
-		}
-		if (RadioTime.latlon && url.indexOf("latlon") < 0 && data.indexOf("latlon") < 0) {
-			url += "latlon=" + RadioTime.latlon + "&";
-			if (RadioTime._exactLocation && url.indexOf("exact") < 0 && data.indexOf("exact") < 0) {
-				url += "exact=1&";
-			}
-		}
-		if (!needAuth && RadioTime.locale && url.indexOf("locale") < 0 && data.indexOf("locale") < 0) {
-			url += "locale=" + RadioTime.locale + "&";
-		}
-		if (-1 == url.indexOf("render=json")) {
-			url += "render=json&";
-		}
-		return {"url": url, "data": data};
-	},	
+    if (url.indexOf("username") < 0 && this._username !== undefined) {
+        url += "username=" + this._username + "&";
+    }
+    if (needAuth && url.indexOf("password") < 0 && this._password !== undefined) {
+        url += "password=" + this._password + "&";
+    }
+    if (url.indexOf("partnerId") < 0 && data.indexOf("partnerId") < 0) {
+        url += "partnerId=" + RadioTime._partnerId + "&";
+    }
+    if (url.indexOf("username") < 0 && url.indexOf("serial") < 0 && data.indexOf("serial") < 0) {
+        url += "serial=" + RadioTime._serial + "&";
+    }
+    if (!needAuth && RadioTime.formats && url.indexOf("formats") < 0 && data.indexOf("formats") < 0) {
+        url += "formats=" + RadioTime.formats.join(",") + "&";
+    }
+    if (!needAuth && !RadioTime.includePlaylists && url.indexOf("playlists") < 0 && data.indexOf("playlists") < 0) {
+        url += "playlists=none&";
+    }
+    if (RadioTime.latlon && url.indexOf("latlon") < 0 && data.indexOf("latlon") < 0) {
+        url += "latlon=" + RadioTime.latlon + "&";
+        if (RadioTime._exactLocation && url.indexOf("exact") < 0 && data.indexOf("exact") < 0) {
+            url += "exact=1&";
+        }
+    }
+    if (!needAuth && RadioTime.locale && url.indexOf("locale") < 0 && data.indexOf("locale") < 0) {
+        url += "locale=" + RadioTime.locale + "&";
+    }
+    if (-1 == url.indexOf("render=json")) {
+        url += "render=json&";
+    }
+
+    // Final safety fallback: catch any stray http:// replacements
+    if (url.indexOf("http://") === 0) {
+        url = url.replace("http://", "https://");
+    }
+
+    return {"url": url, "data": data};
+},
+	
 	loadJSON: function(url, onsuccess, onfailure, cacheTTL) {
 		var originalUrl = url;
 		url = RadioTime._formatReq(url);
