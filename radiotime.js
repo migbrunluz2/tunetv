@@ -1181,8 +1181,12 @@ var RadioTime = {
     }
     
     if (url.indexOf("https") < 0) { // default request path
-        // Clean up _baseUrl in case it already contains "http://" or "https://"
-        var cleanBaseUrl = RadioTime._baseUrl.replace(/^https?:\/\//i, "");
+        // Garante a remoção de http:// ou https:// independente de letras maiúsculas/minúsculas
+        var cleanBaseUrl = RadioTime._baseUrl.replace(/^(https?:\/\/)?/i, "");
+        // Garante que o cleanBaseUrl termine com uma barra se não houver uma no começo de url
+        if (cleanBaseUrl.slice(-1) !== "/" && url.charAt(0) !== "/") {
+            cleanBaseUrl += "/";
+        }
         url = "https://" + cleanBaseUrl + url;
     }
     
@@ -1219,13 +1223,16 @@ var RadioTime = {
         url += "render=json&";
     }
 
-    // Final safety fallback: catch any stray http:// replacements
+    // CORREÇÃO BRUTA: Remove qualquer duplicação ou mistura de protocolos na URL final
+    url = url.replace(/https?:\/\/https?:\/\//i, "https://");
+    url = url.replace(/https?:\/\/http:\/\//i, "https://");
     if (url.indexOf("http://") === 0) {
         url = url.replace("http://", "https://");
     }
 
     return {"url": url, "data": data};
 },
+
 	
 	loadJSON: function(url, onsuccess, onfailure, cacheTTL) {
 		var originalUrl = url;
