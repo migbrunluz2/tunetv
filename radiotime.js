@@ -1165,10 +1165,18 @@ var RadioTime = {
 	logoSizes: {"square": "q", "small": "", "normal": ""}, 
 	logoFormats: {"png":"png","gif":"gif"},
 	getLogoUrl: function(guide_id, logoSize, logoFormat) {
-		var logoSizeCode = RadioTime.logoSizes[logoSize] || "";
-		var logoFormat = RadioTime.logoFormats[logoFormat] || "png";
-		return "https://cdn-radiotime-logos.tunein.com/" + guide_id + logoSizeCode + "." + logoFormat;
-	},
+    var logoSizeCode = RadioTime.logoSizes[logoSize] || "";
+    var logoFormat = RadioTime.logoFormats[logoFormat] || "png";
+
+    var logoUrl = "https://cdn-radiotime-logos.tunein.com/" +
+        guide_id + logoSizeCode + "." + logoFormat;
+
+    if (logoUrl.endsWith("s0q.png")) {
+        return "./s0q.png";
+    }
+
+    return logoUrl;
+},
 	getReportProblemUrl: function(guide_id) {
 		return "Report.ashx?c=wizard&id=" + guide_id;
 	},
